@@ -41,7 +41,7 @@ module Filters
         @filter_set, @name, @value, @selected = filter_set, name, value, selected
       end
 
-      def param_to_select
+      def value_after_toggle
         @filter_set.params_for_filter(self)
       end
 

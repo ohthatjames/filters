@@ -19,11 +19,11 @@ describe Filters::FilterSet do
     end
 
     it "returns a URL for selecting each filter" do
-      size_filter_set.map(&:param_to_select).should == ["size:s", "size:m", "size:l"]
+      size_filter_set.map(&:value_after_toggle).should == ["size:s", "size:m", "size:l"]
     end
 
     it "returns the param to turn a filter off if selected" do
-      size_filter_set("m").map(&:param_to_select).should == ["size:s", "", "size:l"]
+      size_filter_set("m").map(&:value_after_toggle).should == ["size:s", "", "size:l"]
     end
 
     it "doesn't allow multi-selection" do
@@ -45,11 +45,11 @@ describe Filters::FilterSet do
     end
 
     it "returns a URL param for selecting each filter" do
-      multi_filter_set("").map(&:param_to_select).should == ["colour:red", "colour:green", "colour:white"]
+      multi_filter_set("").map(&:value_after_toggle).should == ["colour:red", "colour:green", "colour:white"]
     end
 
     it "appends extra parameters if a parameter is already selected" do
-      multi_filter_set("red").map(&:param_to_select).should == ["", "colour:red,green", "colour:red,white"]
+      multi_filter_set("red").map(&:value_after_toggle).should == ["", "colour:red,green", "colour:red,white"]
     end
   end
 end
