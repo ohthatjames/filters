@@ -27,11 +27,8 @@ module Filters
     end
 
     def params_for_filter(filter)
-      new_values = if multi_select_allowed?
-        filter.selected? ? @selected_values - [filter.value] : @selected_values + [filter.value]
-      else
-        filter.selected? ? [] : [filter.value]
-      end
+      starting_values = multi_select_allowed? ? @selected_values : []
+      new_values = filter.selected? ? starting_values - [filter.value] : starting_values + [filter.value]
       new_values.empty? ? "" : "#{name}:#{new_values.map.join(",")}"
     end
 
