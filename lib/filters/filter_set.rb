@@ -5,7 +5,8 @@ module Filters
     attr_reader :name
     def initialize(name, multi_select_allowed, selected_value)
       @name = name
-      @selected_values = multi_select_allowed ? selected_value.split(',') : [selected_value]
+      @multi_select_allowed = multi_select_allowed
+      @selected_values = multi_select_allowed ? selected_value.split(',') : (selected_value.empty? ? [] : [selected_value])
       @filters = []
     end
 
@@ -21,6 +22,19 @@ module Filters
       select(&:selected?)
     end
 
+    def multi_select_allowed?
+      @multi_select_allowed
+    end
+
+    def params_for_filter(filter)
+      new_values = if multi_select_allowed?
+        filter.selected? ? @selected_values - [filter.value] : @selected_values + [filter.value]
+      else
+        filter.selected? ? [] : [filter.value]
+      end
+      new_values.empty? ? "" : "#{name}:#{new_values.map.join(",")}"
+    end
+
     class Filter
       attr_reader :name, :value
       def initialize(filter_set, name, value, selected)
@@ -28,7 +42,7 @@ module Filters
       end
 
       def param_to_select
-        selected? ? "" : "#{@filter_set.name}:#{@value}"
+        @filter_set.params_for_filter(self)
       end
 
       def selected?

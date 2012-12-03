@@ -43,5 +43,13 @@ describe Filters::FilterSet do
     it "allows multiple filters to be selected at once, separated by commas" do
       multi_filter_set("red,green").selected_filters.map(&:name).should == ["red", "green"]
     end
+
+    it "returns a URL param for selecting each filter" do
+      multi_filter_set("").map(&:param_to_select).should == ["colour:red", "colour:green", "colour:white"]
+    end
+
+    it "appends extra parameters if a parameter is already selected" do
+      multi_filter_set("red").map(&:param_to_select).should == ["", "colour:red,green", "colour:red,white"]
+    end
   end
 end
