@@ -3,14 +3,14 @@ module Filters
     include Enumerable
 
     attr_reader :name
-    def initialize(name, selected_value="")
+    def initialize(name, multi_select_allowed, selected_value)
       @name = name
-      @selected_value = selected_value
+      @selected_values = multi_select_allowed ? selected_value.split(',') : [selected_value]
       @filters = []
     end
 
     def add_filter(name, value)
-      @filters << Filter.new(self, name, value, @selected_value == value)
+      @filters << Filter.new(self, name, value, @selected_values.include?(value))
     end
 
     def each(&block)

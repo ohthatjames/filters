@@ -3,18 +3,10 @@ require 'spec_helper'
 describe Filters::FilterSet do
   describe "with no multiselect allowed" do
     def size_filter_set(selected="")
-      filter_set = Filters::FilterSet.new("size", selected)
+      filter_set = Filters::FilterSet.new("size", false, selected)
       filter_set.add_filter("small", "s")
       filter_set.add_filter("medium", "m")
       filter_set.add_filter("large", "l")
-      filter_set
-    end
-
-    let(:multi_filter_set) do
-      filter_set = Filters::FilterSet.new("colour")
-      filter_set.add_filter("red", "red")
-      filter_set.add_filter("green", "green")
-      filter_set.add_filter("white", "white")
       filter_set
     end
 
@@ -32,6 +24,24 @@ describe Filters::FilterSet do
 
     it "returns the param to turn a filter off if selected" do
       size_filter_set("m").map(&:param_to_select).should == ["size:s", "", "size:l"]
+    end
+
+    it "doesn't allow multi-selection" do
+      size_filter_set("m,l").selected_filters.map(&:name).should == []
+    end
+  end
+
+  describe "with multiselect allowed" do
+    def multi_filter_set(selected="")
+      filter_set = Filters::FilterSet.new("colour", true, selected)
+      filter_set.add_filter("red", "red")
+      filter_set.add_filter("green", "green")
+      filter_set.add_filter("white", "white")
+      filter_set
+    end
+
+    it "allows multiple filters to be selected at once, separated by commas" do
+      multi_filter_set("red,green").selected_filters.map(&:name).should == ["red", "green"]
     end
   end
 end
