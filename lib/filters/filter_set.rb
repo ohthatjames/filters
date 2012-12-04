@@ -24,8 +24,8 @@ module Filters
       select(&:selected?)
     end
 
-    def params_for_filter(filter)
-      new_values = values_after_toggle_for(filter)
+    def value_after_toggle_for_filter(filter)
+      new_values = value_after_toggle_for(filter)
       new_values.empty? ? "" : "#{name}:#{new_values.map.join(",")}"
     end
 
@@ -34,7 +34,7 @@ module Filters
       selection_policy.base_for_new_values(selected_values)
     end
 
-    def values_after_toggle_for(filter)
+    def value_after_toggle_for(filter)
       filter.selected? ? base_for_new_values - [filter.value] : base_for_new_values + [filter.value]
     end
 
@@ -45,7 +45,7 @@ module Filters
       end
 
       def value_after_toggle
-        @filter_set.params_for_filter(self)
+        @filter_set.value_after_toggle_for_filter(self)
       end
 
       def selected?
