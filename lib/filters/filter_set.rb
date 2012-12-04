@@ -6,7 +6,7 @@ module Filters
     def initialize(name, selected_value, selection_policy)
       @name = name
       @multi_select_allowed = selection_policy.multi_select_allowed?
-      @selected_values = @multi_select_allowed ? selected_value.split(',') : (selected_value.empty? ? [] : [selected_value])
+      @selected_values = selection_policy.selected_values_from(selected_value)
       @filters = []
     end
 
