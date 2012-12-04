@@ -3,7 +3,7 @@ module Filters
     include Enumerable
 
     attr_reader :name
-    def initialize(name, multi_select_allowed, selected_value)
+    def initialize(name, selected_value, multi_select_allowed)
       @name = name
       @multi_select_allowed = multi_select_allowed
       @selected_values = multi_select_allowed ? selected_value.split(',') : (selected_value.empty? ? [] : [selected_value])
