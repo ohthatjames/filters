@@ -6,7 +6,6 @@ module Filters
     def initialize(name, selected_value, selection_policy)
       @name = name
       @selection_policy = selection_policy
-      @multi_select_allowed = selection_policy.multi_select_allowed?
       @selected_values = selection_policy.selected_values_from(selected_value)
       @filters = []
     end
@@ -21,10 +20,6 @@ module Filters
 
     def selected_filters
       select(&:selected?)
-    end
-
-    def multi_select_allowed?
-      @multi_select_allowed
     end
 
     def params_for_filter(filter)
