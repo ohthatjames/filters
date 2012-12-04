@@ -8,7 +8,7 @@ module Filters
       value.empty? ? [] : [value]
     end
 
-    def base_values(values)
+    def base_for_new_values(values)
       []
     end
   end

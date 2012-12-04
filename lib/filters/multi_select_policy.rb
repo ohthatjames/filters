@@ -8,7 +8,7 @@ module Filters
       value.split(',')
     end
 
-    def base_values(values)
+    def base_for_new_values(values)
       values
     end
   end

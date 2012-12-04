@@ -31,7 +31,7 @@ module Filters
 
     private
     def base_for_new_values
-      selection_policy.base_values(selected_values)
+      selection_policy.base_for_new_values(selected_values)
     end
 
     def values_after_toggle_for(filter)
