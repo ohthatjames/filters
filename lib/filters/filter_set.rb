@@ -25,9 +25,17 @@ module Filters
     end
 
     def params_for_filter(filter)
-      starting_values = selection_policy.base_values(selected_values)
-      new_values = filter.selected? ? starting_values - [filter.value] : starting_values + [filter.value]
+      new_values = values_after_toggle_for(filter)
       new_values.empty? ? "" : "#{name}:#{new_values.map.join(",")}"
+    end
+
+    private
+    def base_for_new_values
+      selection_policy.base_values(selected_values)
+    end
+
+    def values_after_toggle_for(filter)
+      filter.selected? ? base_for_new_values - [filter.value] : base_for_new_values + [filter.value]
     end
 
     class Filter
