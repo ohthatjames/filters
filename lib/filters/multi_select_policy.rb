@@ -7,5 +7,9 @@ module Filters
     def selected_values_from(value)
       value.split(',')
     end
+
+    def base_values(values)
+      values
+    end
   end
 end

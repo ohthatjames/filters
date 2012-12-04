@@ -5,6 +5,7 @@ module Filters
     attr_reader :name
     def initialize(name, selected_value, selection_policy)
       @name = name
+      @selection_policy = selection_policy
       @multi_select_allowed = selection_policy.multi_select_allowed?
       @selected_values = selection_policy.selected_values_from(selected_value)
       @filters = []
@@ -27,7 +28,7 @@ module Filters
     end
 
     def params_for_filter(filter)
-      starting_values = multi_select_allowed? ? @selected_values : []
+      starting_values = @selection_policy.base_values(@selected_values)
       new_values = filter.selected? ? starting_values - [filter.value] : starting_values + [filter.value]
       new_values.empty? ? "" : "#{name}:#{new_values.map.join(",")}"
     end
