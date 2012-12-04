@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Filters::FilterSet do
   describe "with no multiselect allowed" do
     def size_filter_set(selected="")
-      filter_set = Filters::FilterSet.new("size", selected, false)
+      filter_set = Filters::FilterSet.new("size", selected, Filters::SingleSelectPolicy.new)
       filter_set.add_filter("small", "s")
       filter_set.add_filter("medium", "m")
       filter_set.add_filter("large", "l")
@@ -33,7 +33,7 @@ describe Filters::FilterSet do
 
   describe "with multiselect allowed" do
     def multi_filter_set(selected="")
-      filter_set = Filters::FilterSet.new("colour", selected, true)
+      filter_set = Filters::FilterSet.new("colour", selected, Filters::MultiSelectPolicy.new)
       filter_set.add_filter("red", "red")
       filter_set.add_filter("green", "green")
       filter_set.add_filter("white", "white")
