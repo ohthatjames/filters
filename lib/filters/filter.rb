@@ -23,10 +23,13 @@ module Filters
     def selected_options
       select(&:selected?)
     end
+    
+    def current_value
+      param_string(selected_options.map(&:value))
+    end
 
     def value_after_toggle_for_filter(filter_option)
-      new_values = value_after_toggle_for(filter_option)
-      new_values.empty? ? "" : "#{name}:#{new_values.map.join(",")}"
+      param_string(value_after_toggle_for(filter_option))
     end
 
     private
@@ -36,6 +39,10 @@ module Filters
 
     def value_after_toggle_for(filter_option)
       filter_option.selected? ? base_for_new_values - [filter_option.value] : base_for_new_values + [filter_option.value]
+    end
+    
+    def param_string(values)
+      values.empty? ? "" : "#{name}:#{values.join(",")}"
     end
   end
 end

@@ -43,6 +43,14 @@ describe Filters::Filter do
     it "allows multiple filters to be selected at once, separated by commas" do
       multi_filter("red,green").selected_options.map(&:name).should == ["red", "green"]
     end
+    
+    it "has a default current value of the empty string" do
+      multi_filter.current_value.should == ""
+    end
+    
+    it "has a current value of all its selections" do
+      multi_filter("red,green").current_value.should == "colour:red,green"
+    end
 
     it "returns a URL param for selecting each filter" do
       multi_filter("").map(&:value_after_toggle).should == ["colour:red", "colour:green", "colour:white"]
