@@ -19,11 +19,11 @@ describe Filters::Filter do
     end
 
     it "returns a URL for selecting each filter" do
-      size_filter.map(&:value_after_toggle).should == ["size:s", "size:m", "size:l"]
+      size_filter.map(&:param_after_toggle).should == ["size:s", "size:m", "size:l"]
     end
 
     it "returns the param to turn a filter off if selected" do
-      size_filter("m").map(&:value_after_toggle).should == ["size:s", "", "size:l"]
+      size_filter("m").map(&:param_after_toggle).should == ["size:s", "", "size:l"]
     end
 
     it "doesn't allow multi-selection" do
@@ -44,20 +44,20 @@ describe Filters::Filter do
       multi_filter("red,green").selected_options.map(&:name).should == ["red", "green"]
     end
     
-    it "has a default current value of the empty string" do
-      multi_filter.current_value.should == ""
+    it "has a default current param of the empty string" do
+      multi_filter.current_param.should == ""
     end
     
-    it "has a current value of all its selections" do
-      multi_filter("red,green").current_value.should == "colour:red,green"
+    it "has a current param of all its selections" do
+      multi_filter("red,green").current_param.should == "colour:red,green"
     end
 
     it "returns a URL param for selecting each filter" do
-      multi_filter("").map(&:value_after_toggle).should == ["colour:red", "colour:green", "colour:white"]
+      multi_filter("").map(&:param_after_toggle).should == ["colour:red", "colour:green", "colour:white"]
     end
 
     it "appends extra parameters if a parameter is already selected" do
-      multi_filter("red").map(&:value_after_toggle).should == ["", "colour:red,green", "colour:red,white"]
+      multi_filter("red").map(&:param_after_toggle).should == ["", "colour:red,green", "colour:red,white"]
     end
   end
 end

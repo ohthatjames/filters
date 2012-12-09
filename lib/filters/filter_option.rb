@@ -5,8 +5,8 @@ module Filters
       @filter, @name, @value, @selected = filter, name, value, selected
     end
 
-    def value_after_toggle
-      @filter.value_after_toggle_for_filter(self)
+    def param_after_toggle
+      @filter.param_after_toggle_for(self)
     end
 
     def selected?
