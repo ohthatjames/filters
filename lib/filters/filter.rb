@@ -5,10 +5,10 @@ module Filters
     attr_reader :name, :selection_policy, :selected_values
     private :selection_policy, :selected_values
 
-    def initialize(name, param_value, selection_policy)
+    def initialize(name, current_param_value, selection_policy)
       @name = name
       @selection_policy = selection_policy
-      @selected_values = selection_policy.selected_values_from(param_value)
+      @selected_values = selection_policy.selected_values_from(current_param_value)
       @filter_options = []
     end
 
@@ -25,7 +25,7 @@ module Filters
     end
     
     def current_param
-      param_string(selected_options.map(&:value))
+      param_string(selected_values)
     end
 
     def param_after_toggle_for(filter_option)
